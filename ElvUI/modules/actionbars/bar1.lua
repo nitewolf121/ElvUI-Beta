@@ -2,149 +2,151 @@ local E, C, L, DF = unpack(select(2, ...)); --Load Ace3, Ace3-ConfigProfile, Loc
 local AB = E:GetModule('ActionBars');
 if C["actionbar"].enable ~= true then return; end
 
-local bar = CreateFrame('Frame', 'ElvUI_Bar1', E.UIParent, 'SecureHandlerStateTemplate')
+local ceil = math.ceil;
+
+local bar = CreateFrame('Frame', 'ElvUI_Bar1', E.UIParent, 'SecureHandlerStateTemplate');
 local condition = "[bonusbar:5] 11; [bar:2] 2; [bar:3] 3; [bar:4] 4; [bar:5] 5; [bar:6] 6;";
-bar:CreateBackdrop('Default')
-bar.backdrop:SetAllPoints()
-bar:Point('BOTTOM', 0, 3)
+bar:CreateBackdrop('Default');
+bar.backdrop:SetAllPoints();
+bar:Point('BOTTOM', 0, 3);
 
 function AB:PositionAndSizeBar1()
-	local spacing = C['actionbar'].buttonspacing
-	local buttonsPerRow = C['actionbar']['bar1'].buttonsPerRow
-	local numButtons = C['actionbar']['bar1'].buttons
-	local size = C['actionbar'].buttonsize
-	local point = C['actionbar']['bar1'].point
-	local numColumns = math.ceil(numButtons / buttonsPerRow);
-	local widthMult = C['actionbar']['bar1'].widthMult
-	local heightMult = C['actionbar']['bar1'].heightMult
+	local spacing = E:Scale(C['actionbar'].buttonspacing);
+	local buttonsPerRow = C['actionbar']['bar1'].buttonsPerRow;
+	local numButtons = C['actionbar']['bar1'].buttons;
+	local size = E:Scale(C['actionbar'].buttonsize);
+	local point = C['actionbar']['bar1'].point;
+	local numColumns = ceil(numButtons / buttonsPerRow);
+	local widthMult = C['actionbar']['bar1'].widthMult;
+	local heightMult = C['actionbar']['bar1'].heightMult;
 	
 	if numButtons < buttonsPerRow then
-		buttonsPerRow = numButtons
+		buttonsPerRow = numButtons;
 	end
 
 	if numColumns < 1 then
-		numColumns = 1
+		numColumns = 1;
 	end
 
 	if C['actionbar']['bar1'].enabled then
-		bar:SetScale(1)
-		bar:SetAlpha(1)
+		bar:SetScale(1);
+		bar:SetAlpha(1);
 	else
-		bar:SetScale(0.000001)
-		bar:SetAlpha(0)
+		bar:SetScale(0.000001);
+		bar:SetAlpha(0);
 	end
 
-	bar:Width(spacing + ((size * (buttonsPerRow * widthMult)) + ((spacing * (buttonsPerRow - 1)) * widthMult) + (spacing * widthMult)))
-	bar:Height(spacing + ((size * (numColumns * heightMult)) + ((spacing * (numColumns - 1)) * heightMult) + (spacing * heightMult)))
-	bar.mover:Size(bar:GetSize())
+	bar:SetWidth(spacing + ((size * (buttonsPerRow * widthMult)) + ((spacing * (buttonsPerRow - 1)) * widthMult) + (spacing * widthMult)));
+	bar:SetHeight(spacing + ((size * (numColumns * heightMult)) + ((spacing * (numColumns - 1)) * heightMult) + (spacing * heightMult)));
+	bar.mover:SetSize(bar:GetSize());
 	
 	if C['actionbar']['bar1'].backdrop == true then
-		bar.backdrop:Show()
+		bar.backdrop:Show();
 	else
-		bar.backdrop:Hide()
+		bar.backdrop:Hide();
 	end
 	
-	local horizontalGrowth, verticalGrowth
+	local horizontalGrowth, verticalGrowth;
 	if point == "TOPLEFT" or point == "TOPRIGHT" then
-		verticalGrowth = "DOWN"
+		verticalGrowth = "DOWN";
 	else
-		verticalGrowth = "UP"
+		verticalGrowth = "UP";
 	end
 	
 	if point == "BOTTOMLEFT" or point == "TOPLEFT" then
-		horizontalGrowth = "RIGHT"
+		horizontalGrowth = "RIGHT";
 	else
-		horizontalGrowth = "LEFT"
+		horizontalGrowth = "LEFT";
 	end
 	
-	local button, lastButton, lastColumnButton 
-	local possibleButtons = {}
+	local button, lastButton, lastColumnButton ;
+	local possibleButtons = {};
 	for i=1, NUM_ACTIONBAR_BUTTONS do
 		button = _G["ActionButton"..i];
-		lastButton = _G["ActionButton"..i-1]
-		lastColumnButton = _G["ActionButton"..i-buttonsPerRow]
-		button:SetParent(bar)
-		button:ClearAllPoints()
+		lastButton = _G["ActionButton"..i-1];
+		lastColumnButton = _G["ActionButton"..i-buttonsPerRow];
+		button:SetParent(bar);
+		button:ClearAllPoints();
 		
-		button:SetAttribute("showgrid", 1)
-		ActionButton_ShowGrid(button)
+		button:SetAttribute("showgrid", 1);
+		ActionButton_ShowGrid(button);
 			
-		possibleButtons[((i * buttonsPerRow) + 1)] = true
+		possibleButtons[((i * buttonsPerRow) + 1)] = true;
 
 		if C['actionbar']['bar1'].mouseover == true then
-			bar:SetAlpha(0)
+			bar:SetAlpha(0);
 			if not self.hooks[bar] then
-				self:HookScript(bar, 'OnEnter', 'Bar_OnEnter')
-				self:HookScript(bar, 'OnLeave', 'Bar_OnLeave')	
+				self:HookScript(bar, 'OnEnter', 'Bar_OnEnter');
+				self:HookScript(bar, 'OnLeave', 'Bar_OnLeave');	
 			end
 			
 			if not self.hooks[button] then
-				self:HookScript(button, 'OnEnter', 'Button_OnEnter')
-				self:HookScript(button, 'OnLeave', 'Button_OnLeave')					
+				self:HookScript(button, 'OnEnter', 'Button_OnEnter');
+				self:HookScript(button, 'OnLeave', 'Button_OnLeave');					
 			end
 		else
-			bar:SetAlpha(1)
+			bar:SetAlpha(1);
 			if self.hooks[bar] then
-				self:Unhook(bar, 'OnEnter')
-				self:Unhook(bar, 'OnLeave')	
+				self:Unhook(bar, 'OnEnter');
+				self:Unhook(bar, 'OnLeave');
 			end
 			
 			if self.hooks[button] then
-				self:Unhook(button, 'OnEnter')	
-				self:Unhook(button, 'OnLeave')		
+				self:Unhook(button, 'OnEnter');	
+				self:Unhook(button, 'OnLeave');	
 			end
 		end
 		
 		if i == 1 then
-			local x, y
+			local x, y;
 			if point == "BOTTOMLEFT" then
-				x, y = spacing, spacing
+				x, y = spacing, spacing;
 			elseif point == "TOPRIGHT" then
-				x, y = -spacing, -spacing
+				x, y = -spacing, -spacing;
 			elseif point == "TOPLEFT" then
-				x, y = spacing, -spacing
+				x, y = spacing, -spacing;
 			else
-				x, y = -spacing, spacing
+				x, y = -spacing, spacing;
 			end
 
-			button:Point(point, bar, point, x, y)
+			button:Point(point, bar, point, x, y);
 		elseif possibleButtons[i] then
-			local x = 0
-			local y = -spacing
-			local buttonPoint, anchorPoint = "TOP", "BOTTOM"
+			local x = 0;
+			local y = -spacing;
+			local buttonPoint, anchorPoint = "TOP", "BOTTOM";
 			if verticalGrowth == 'UP' then
-				y = spacing
-				buttonPoint = "BOTTOM"
-				anchorPoint = "TOP"
+				y = spacing;
+				buttonPoint = "BOTTOM";
+				anchorPoint = "TOP";
 			end
-			button:Point(buttonPoint, lastColumnButton, anchorPoint, x, y)			
+			button:Point(buttonPoint, lastColumnButton, anchorPoint, x, y);		
 		else
-			local x = spacing
-			local y = 0
-			local buttonPoint, anchorPoint = "LEFT", "RIGHT"
+			local x = spacing;
+			local y = 0;
+			local buttonPoint, anchorPoint = "LEFT", "RIGHT";
 			if horizontalGrowth == 'LEFT' then
-				x = -spacing
-				buttonPoint = "RIGHT"
-				anchorPoint = "LEFT"
+				x = -spacing;
+				buttonPoint = "RIGHT";
+				anchorPoint = "LEFT";
 			end
 			
-			button:Point(buttonPoint, lastButton, anchorPoint, x, y)
+			button:Point(buttonPoint, lastButton, anchorPoint, x, y);
 		end
 		
 		if i > numButtons then
-			button:SetScale(0.000001)
-			button:SetAlpha(0)
+			button:SetScale(0.000001);
+			button:SetAlpha(0);
 		else
-			button:SetScale(1)
-			button:SetAlpha(1)
+			button:SetScale(1);
+			button:SetAlpha(1);
 		end
 		
-		self:StyleButton(button)
+		self:StyleButton(button);
 	end
-	possibleButtons = nil
+	possibleButtons = nil;
 	
-	RegisterStateDriver(bar, "page", self:GetPage('bar1', 1, condition))
-	RegisterStateDriver(bar, "show", C['actionbar']['bar1'].visibility)
+	RegisterStateDriver(bar, "page", self:GetPage('bar1', 1, condition));
+	RegisterStateDriver(bar, "show", C['actionbar']['bar1'].visibility);
 end
 
 function AB:CreateBar1()
@@ -155,26 +157,26 @@ function AB:CreateBar1()
 	end
 	
 	bar:Execute([[
-		buttons = table.new()
+		buttons = table.new();
 		for i = 1, 12 do
-			table.insert(buttons, self:GetFrameRef("ActionButton"..i))
+			table.insert(buttons, self:GetFrameRef("ActionButton"..i));
 		end
 	]]);
 	
 	bar:SetAttribute("_onstate-page", [[ 
 		for i, button in ipairs(buttons) do
-			button:SetAttribute("actionpage", tonumber(newstate))
+			button:SetAttribute("actionpage", tonumber(newstate));
 		end
 	]]);
 	
 	bar:SetAttribute("_onstate-show", [[		
 		if newstate == "hide" then
-			self:Hide()
+			self:Hide();
 		else
-			self:Show()
+			self:Show();
 		end	
 	]])
 	
-	self:CreateMover(bar, 'ActionBar 1', 'bar1')
-	self:PositionAndSizeBar1()
+	self:CreateMover(bar, 'ActionBar 1', 'bar1');
+	self:PositionAndSizeBar1();
 end
