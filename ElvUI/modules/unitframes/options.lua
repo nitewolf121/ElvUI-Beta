@@ -437,6 +437,14 @@ E.Options.args.unitframe.args.player = {
 			name = L['Width'],
 			type = 'range',
 			min = 50, max = 500, step = 1,
+			set = function(info, value) 
+				if C.unitframe.layouts[UF.ActiveLayout]['player'].castbar.width == C.unitframe.layouts[UF.ActiveLayout]['player'][ info[#info] ] then
+					C.unitframe.layouts[UF.ActiveLayout]['player'].castbar.width = value;
+				end
+				
+				C.unitframe.layouts[UF.ActiveLayout]['player'][ info[#info] ] = value; 
+				UF:CreateAndUpdateUF('player');
+			end,
 		},
 		height = {
 			order = 3,
@@ -936,6 +944,14 @@ E.Options.args.unitframe.args.target = {
 			name = L['Width'],
 			type = 'range',
 			min = 50, max = 500, step = 1,
+			set = function(info, value) 
+				if C.unitframe.layouts[UF.ActiveLayout]['target'].castbar.width == C.unitframe.layouts[UF.ActiveLayout]['target'][ info[#info] ] then
+					C.unitframe.layouts[UF.ActiveLayout]['target'].castbar.width = value;
+				end
+				
+				C.unitframe.layouts[UF.ActiveLayout]['target'][ info[#info] ] = value; 
+				UF:CreateAndUpdateUF('target');
+			end,			
 		},
 		height = {
 			order = 3,
@@ -3071,6 +3087,14 @@ E.Options.args.unitframe.args.boss = {
 			name = L['Width'],
 			type = 'range',
 			min = 50, max = 500, step = 1,
+			set = function(info, value) 
+				if C.unitframe.layouts[UF.ActiveLayout]['boss'].castbar.width == C.unitframe.layouts[UF.ActiveLayout]['boss'][ info[#info] ] then
+					C.unitframe.layouts[UF.ActiveLayout]['boss'].castbar.width = value;
+				end
+				
+				C.unitframe.layouts[UF.ActiveLayout]['boss'][ info[#info] ] = value; 
+				UF:CreateAndUpdateUFGroup('boss', MAX_BOSS_FRAMES);
+			end,			
 		},
 		height = {
 			order = 3,
@@ -3509,7 +3533,15 @@ E.Options.args.unitframe.args.arena = {
 			name = L['Width'],
 			type = 'range',
 			min = 50, max = 500, step = 1,
-		},
+			set = function(info, value) 
+				if C.unitframe.layouts[UF.ActiveLayout]['arena'].castbar.width == C.unitframe.layouts[UF.ActiveLayout]['arena'][ info[#info] ] then
+					C.unitframe.layouts[UF.ActiveLayout]['arena'].castbar.width = value;
+				end
+				
+				C.unitframe.layouts[UF.ActiveLayout]['arena'][ info[#info] ] = value; 
+				UF:CreateAndUpdateUFGroup('arena', 5);
+			end,			
+		},			
 		height = {
 			order = 3,
 			name = L['Height'],
