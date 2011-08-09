@@ -1,0 +1,5 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/">	
+	<Include file="nameplates\load_nameplates.xml"/>
+	<Include file="actionbars\load_actionbars.xml"/>
+	<Include file="unitframes\load_unitframes.xml"/>
+</Ui>

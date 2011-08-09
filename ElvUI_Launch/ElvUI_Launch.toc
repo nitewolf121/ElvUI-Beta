@@ -1,0 +1,13 @@
+﻿## Interface: 40200
+## Author: Elv
+## Version: 1.0.0
+## Title: |cff1784d1ElvUI Launch|r 
+## SavedVariables: ElvData_Beta
+## Notes: User Interface replacement AddOn for World of Warcraft.
+
+
+libs\load_libs.xml
+core.lua
+media\load_media.xml
+config\load_config.xml
+locales\load_locales.xml
