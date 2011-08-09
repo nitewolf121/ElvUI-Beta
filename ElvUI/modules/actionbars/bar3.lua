@@ -12,8 +12,8 @@ bar:Point('LEFT', ElvUI_Bar1, 'RIGHT', 3, 0);
 
 function AB:PositionAndSizeBar3()
 	local spacing = E:Scale(C['actionbar'].buttonspacing);
-	local buttonsPerRow = C['actionbar']['bar1'].buttonsPerRow;
-	local numButtons = C['actionbar']['bar1'].buttons;
+	local buttonsPerRow = C['actionbar']['bar3'].buttonsPerRow;
+	local numButtons = C['actionbar']['bar3'].buttons;
 	local size = E:Scale(C['actionbar'].buttonsize);
 	local point = C['actionbar']['bar3'].point;
 	local numColumns = ceil(numButtons / buttonsPerRow);

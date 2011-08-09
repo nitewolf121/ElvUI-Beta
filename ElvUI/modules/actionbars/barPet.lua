@@ -79,8 +79,8 @@ end
 
 function AB:PositionAndSizeBarPet()
 	local spacing = E:Scale(C['actionbar'].buttonspacing);
-	local buttonsPerRow = C['actionbar']['bar1'].buttonsPerRow;
-	local numButtons = C['actionbar']['bar1'].buttons;
+	local buttonsPerRow = C['actionbar']['barPet'].buttonsPerRow;
+	local numButtons = C['actionbar']['barPet'].buttons;
 	local size = E:Scale(C['actionbar'].altbuttonsize);
 	local point = C['actionbar']['barPet'].point;
 	local numColumns = ceil(numButtons / buttonsPerRow);

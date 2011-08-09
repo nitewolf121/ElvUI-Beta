@@ -80,8 +80,8 @@ end
 
 function AB:PositionAndSizeBarShapeShift()
 	local spacing = E:Scale(C['actionbar'].buttonspacing);
-	local buttonsPerRow = C['actionbar']['bar1'].buttonsPerRow;
-	local numButtons = C['actionbar']['bar1'].buttons;
+	local buttonsPerRow = C['actionbar']['barShapeShift'].buttonsPerRow;
+	local numButtons = C['actionbar']['barShapeShift'].buttons;
 	local size = E:Scale(C['actionbar'].altbuttonsize);
 	local point = C['actionbar']['barShapeShift'].point;
 	local widthMult = C['actionbar']['barShapeShift'].widthMult;

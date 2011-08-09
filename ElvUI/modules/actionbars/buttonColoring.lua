@@ -2,37 +2,37 @@ local E, C, L, DF = unpack(select(2, ...)); --Load Ace3, Ace3-ConfigProfile, Loc
 local AB = E:GetModule('ActionBars');
 if C["actionbar"].enable ~= true then return; end
 
-local SPELL_POWER_HOLY_POWER = SPELL_POWER_HOLY_POWER
-local HAND_OF_LIGHT = GetSpellInfo(90174)
+local SPELL_POWER_HOLY_POWER = SPELL_POWER_HOLY_POWER;
+local HAND_OF_LIGHT = GetSpellInfo(90174);
 local HOLY_POWER_SPELLS = {
 	[85256] = GetSpellInfo(85256), --Templar's Verdict
 	[53600] = GetSpellInfo(53600), --Shield of the Righteous
-}
+};
 
 function AB:IsHolyPowerAbility(actionId)
-	local actionType, id = GetActionInfo(actionId)
+	local actionType, id = GetActionInfo(actionId);
 	if actionType == 'macro' then
-		local macroSpell = GetMacroSpell(id)
+		local macroSpell = GetMacroSpell(id);
 		if macroSpell then
 			for spellId, spellName in pairs(HOLY_POWER_SPELLS) do
 				if macroSpell == spellName then
-					return true
+					return true;
 				end
 			end
 		end
 	else
-		return HOLY_POWER_SPELLS[id]
+		return HOLY_POWER_SPELLS[id];
 	end
-	return false
+	return false;
 end
 
-local id, isUsable, noEnoughMana, name, icon, normalTexture, hotkey
+local id, isUsable, noEnoughMana, name, icon, normalTexture, hotkey;
 function AB:UpdateUsable(button)
     id = button.action;
 
-	if not id or not button:IsShown() then return end
+	if not id or not button:IsShown() then return; end
 	
-    isUsable, notEnoughMana = IsUsableAction(id)
+    isUsable, notEnoughMana = IsUsableAction(id);
 	name = button:GetName();
 	icon = _G[name.."Icon"];
 	normalTexture = _G[name.."NormalTexture"];
@@ -49,7 +49,7 @@ function AB:UpdateUsable(button)
             icon:SetVertexColor(1.0, 1.0, 1.0);
             normalTexture:SetVertexColor(1.0, 1.0, 1.0);
         end
-    elseif (notEnoughMana) then
+    elseif notEnoughMana then
         icon:SetVertexColor(0.1, 0.3, 1.0);
         normalTexture:SetVertexColor(0.1, 0.3, 1.0);
 	else
@@ -60,5 +60,5 @@ function AB:UpdateUsable(button)
 end
 
 function AB:LoadButtonColoring()	
-	self:SecureHook('ActionButton_OnUpdate', 'UpdateUsable')
+	self:SecureHook('ActionButton_OnUpdate', 'UpdateUsable');
 end
